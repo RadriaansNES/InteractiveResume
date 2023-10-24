@@ -3,9 +3,13 @@ const bodyParser = require('body-parser');
 const { SessionsClient } = require('@google-cloud/dialogflow');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
+const cors = require('cors'); // Import the cors middleware
+
 
 const app = express();
 const PORT = process.env.PORT || 4567;
+
+app.use(cors());
 
 const VUE_FRONTEND_DIR = path.join(__dirname, '..', 'vue-frontend', 'dist');
 

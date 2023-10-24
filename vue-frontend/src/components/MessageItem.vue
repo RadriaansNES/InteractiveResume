@@ -1,8 +1,8 @@
 <!-- components/MessageItem.vue -->
 <template>
   <div :class="messageClass">
-    {{ message.text }}
-    <span class="message-timestamp">{{ message.timestamp }}</span>
+    <div v-if="message.isTimestamp" class="message-timestamp">{{ message.timestamp }}</div>
+    <div v-else class="message-text">{{ message.text }}</div>
   </div>
 </template>
 
