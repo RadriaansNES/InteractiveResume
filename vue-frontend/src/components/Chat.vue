@@ -2,7 +2,7 @@
 <template>
   <div class="container">
     <div class="avatar">
-      <p>THIS IS A PLACE HOLDER</p>
+      <img :src="selectedAnimation" alt="Animated GIF" style="max-width: 100%;" />
     </div>
     <div class="chat">
       <!-- Chat messages will be displayed here -->
@@ -32,8 +32,15 @@ export default {
     return {
       userMessage: '',
       messages: [],
-      lastMessageTimestamp: null, // Add this property
+      lastMessageTimestamp: null,
+      selectedAnimation: 'WaveFinalCrop.gif',
     };
+  },
+  mounted() {
+
+    setTimeout(() => {
+      this.sendWelcomeMessage();
+    }, 2000);
   },
   methods: {
     async sendMessage() {
@@ -47,13 +54,20 @@ export default {
 
       this.userMessage = '';
 
-      // Scroll to the bottom after adding a new message
       setTimeout(() => {
         this.$refs.messageContainer.scrollTop = this.$refs.messageContainer.scrollHeight;
       }, 0);
     },
+
     async sendToDialogflow(userMessage) {
-      const response = await fetch('http://localhost:4567/dialogflow', { // Specify the complete URL
+      if (!this.serverPort) {
+        console.error('Server port is not defined.');
+        return;
+      }
+
+      const serverUrl = `http://${window.location.hostname}:${this.serverPort}/dialogflow`;
+
+      const response = await fetch(serverUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,9 +79,31 @@ export default {
         throw new Error('Failed to fetch response from Dialogflow');
       }
 
+      else {
+        if (this.selectedAnimation === "WaveFinalCrop.gif") {
+          this.selectedAnimation = 'TalkFinalCrop.gif';
+
+          setTimeout(() => {
+            this.selectedAnimation = 'IdleFinalCrop.gif';
+          }, 3000);
+        } else {
+          this.selectedAnimation = 'TalkFinalCrop.gif';
+
+          setTimeout(() => {
+            this.selectedAnimation = 'IdleFinalCrop.gif';
+          }, 3000);
+        }
+      }
+
       const data = await response.json();
       return data.message;
     },
+
+    sendWelcomeMessage() {
+      const welcomeMessage = 'Hi! I\'m Ryan Adriaans and this is my interactive resume. Please ask any questions you might have about me.';
+      this.addMessage('bot', welcomeMessage);
+    },
+
     addMessage(sender, text) {
       const currentTime = new Date();
       const timestamp = currentTime.toLocaleTimeString();
@@ -77,7 +113,7 @@ export default {
         currentTime - this.lastMessageTimestamp >= 30 * 60 * 1000
       ) {
         // Only add a new timestamp if it's been more than 30 minutes
-        this.messages.push({ timestamp, isTimestamp: true }); // Add isTimestamp property
+        this.messages.push({ timestamp, isTimestamp: true });
       }
 
       this.messages.push({ sender, text });
