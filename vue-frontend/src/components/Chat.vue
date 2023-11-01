@@ -61,14 +61,7 @@ export default {
     },
 
     async sendToDialogflow(userMessage) {
-      if (!this.serverPort) {
-        console.error('Server port is not defined.');
-        return;
-      }
-
-      const serverUrl = `http://${window.location.hostname}:${this.serverPort}/dialogflow`;
-
-      const response = await fetch(serverUrl, {
+      const response = await fetch('/dialogflow', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
