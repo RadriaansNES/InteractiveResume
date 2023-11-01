@@ -34,6 +34,7 @@ export default {
       messages: [],
       lastMessageTimestamp: null,
       selectedAnimation: 'WaveFinalCrop.gif',
+      serverPort: 4567,
     };
   },
   mounted() {
