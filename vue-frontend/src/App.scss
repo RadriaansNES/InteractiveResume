@@ -160,19 +160,20 @@ input {
     }
 
     .chat {
+        padding-right: 1vh;
         width: 48% !important;
     }
 
+    .message-text {
+        font-size: 12px;
+    }
+
     .container {
-        padding: 0 1vh;
         max-width: 100vh;
     }
 
     input {
         font-size: 10px;
     }
-
-
-
 
   }
