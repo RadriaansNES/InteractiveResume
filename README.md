@@ -11,10 +11,10 @@
 ### Visual Animations: The avatar's responses are not limited to words alone. Engage your audience with dynamic animations and expressions that bring your resume to life.
 
 ## Technologies Used:
-- Frontend: Vue.js
+- Frontend: Vue.js, HTML, Javascript
 - Backend: Node.js with Express
 - Natural Language Processing: Dialogflow
-- Animations: CSS and JavaScript
+- Animations: SCSS and JavaScript
 
 ## How To Run Locally: 
 First, clone the repositiory to your local machine. Next, install all the depencies outlined within the package.json files. Finally, run 'node app.js' from the /node-backend directory. This will require a service_account key (json file) within the node-backend to boot. 
